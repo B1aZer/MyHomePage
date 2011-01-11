@@ -10,7 +10,7 @@ import datetime
 import urllib2,urllib,cookielib
 import re
 from BeautifulSoup import BeautifulSoup,Tag
-from time import clock,localtime,strftime
+from time import clock,localtime
 from app.myfeed.models import *
 import os.path
 from django.contrib.auth.models import User
