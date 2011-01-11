@@ -21,7 +21,6 @@ from django.db import connection
 
 COOKIEFILE = 'cookie'
 FEED_COUNT = 5
-#works for twitter only
 
 class Person:
     def __init__(self):
