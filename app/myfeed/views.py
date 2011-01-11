@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #from django.http import HttpResponse, Http404, HttpResponseRedirect
-#from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.shortcuts import render_to_response,get_object_or_404
 import twitter
