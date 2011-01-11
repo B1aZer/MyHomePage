@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{% block title %}{{head_title}}{% endblock %}</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <!--<link rel="shortcut icon" HREF="{{ MEDIA_URL }}img/favicon.png">--!>
+  <link href="{{ MEDIA_URL }}css/dark-hive/jquery-ui-1.8.7.custom.css" type="text/css" rel="stylesheet">
+  <!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>--!>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js"></script>
+  {% block external %}{% endblock %}
+</head>
+<body> 
+    <div id="container">
+        <div id="header">
+            <h1>
+                {% block page %}{{page_title}}{% endblock %}
+            </h1>
+        </div>
+        <div id="content-container">
+            <div id="column">
+            <div id="content">
+                {% block content %}
+                {% if tw_news %}
+                {% include "twitter.html" %} 
+                {% endif %} 
+                {% if news_feed %}
+                {% include "facebook.html" %} 
+                {% endif %}
+                {% if vk_news %}
+                {% include "vkontakte.html" %} 
+                {% endif %}
+                {% if not tw_news and not vk_news and not news_feed  %}
+                <h2> Hellow </h2>
+                {% endif %}
+                {% endblock %}                
+            </div>
+            <div id="aside">
+                {% block aside %}
+                <h3>
+                    Aside heading
+                </h3>
+                <p>
+                Side Menu
+                </p>
+                {% endblock %}
+            </div>
+            </div>
+        </div>
+        <div id="footer">
+        Copyright © Site name, 20XX
+        </div>
+    </div>
+</body> 
+</html>
+

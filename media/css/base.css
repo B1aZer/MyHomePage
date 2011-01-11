@@ -1,0 +1,61 @@
+/*
+ *	DEFAULT FONT
+ *	Just to make demo-pages look better - not actually relevant to Layout!
+ */
+body {
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    outline: 0; 
+    line-height: 1.3; 
+    text-decoration: none; 
+    font-size: 100%; 
+    list-style: none;
+	font-family: 'Lucida Grande', sans-serif, Helvetica;
+	font-size:   80%;
+	*font-size:  80%;
+    color:#5c4821;
+}
+
+a, a:active, a:hover, a:visited, button {
+    outline: none;
+}
+
+a img {
+    border: none;
+}
+
+h1,h2,h3,h4,h5 
+{ 
+    border: 0 none;
+    font-family: 'Lobster',arial,serif;
+}
+
+.odd
+{
+     background-color: #C4B597;
+}
+
+#header
+{
+    text-align: center;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background-color: #8c7d60;
+}
+
+#content
+{
+    background-color: #c4b9a3;
+}
+
+#aside
+{
+    background-color: #c4b9a3;
+}
+
+#footer
+{
+    background-color: #8c7d60;
+}

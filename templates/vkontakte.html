@@ -1,0 +1,36 @@
+{% if vk_news %}
+<h2>Vkontakte Timeline</h2>
+<div class="accordeon">
+    {% for mess in vk_news %}
+    <h3><a href="#">{{ mess.user.name }}</a></h3>
+      <div class="entry clearfix">
+        <div class="profile"><a href="http://vkontakte.ru/{{ mess.user.nick }}"><img src="{{ mess.user.picurl  }}"/></a></div>
+	<div class="body">
+          <div class="message">
+	    <a class="name" href="http://vkontakte.ru/{{ mess.user.nick }}">{{ mess.user.name|escape }}</a>
+        {% if mess.text %}<br>{{ mess.text|safe }}{% endif %}
+	  </div>
+	  {% if mess.caption or mess.picture %}
+	    <div class="attachment clearfix{% if not mess.picture %} nopicture{% endif %}">
+	      {% if mess.picture %}
+	        <div class="picture"><a href="{{ mess.link|escape }}"><img src="{{ mess.picture|escape }}"/></a></div>
+	      {% endif %}
+	      {% if mess.name %}
+	        <div class="name"><a href="{{ mess.link|escape }}">{{ mess.name|escape }}</a></div>
+	      {% endif %}
+	      {% if mess.caption %}
+	        <div class="caption">{{ mess.caption|escape }}</div>
+	      {% endif %}
+	      {% if mess.description %}
+	        <div class="description">{{ mess.description|escape }}</div>
+	      {% endif %}
+	    </div>
+	  {% endif %}
+	  <div class="info{% if mess.icon %} icon{% endif %}"{% if mess.icon %} style="background:url('{{ mess.icon|escape }}') no-repeat scroll 0 0 transparent"{% endif %}>
+	   <br> {{ mess.created|timesince }} ago
+	  </div>
+	</div>
+      </div>
+    {% endfor %}
+</div>
+{% endif %}

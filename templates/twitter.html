@@ -1,0 +1,37 @@
+{% if tw_news %}
+<h2>Twitter Timeline</h2>
+    <div class="accordeon">
+    {% for tw_mess in tw_news %}
+    <h3><a href="#">{{ tw_mess.user.nick }}</a></h3>
+    <div class="entry clearfix">
+        <div class="profile"><a href="http://twitter.com/#!/{{ tw_mess.user.nick }}"><img src="{{ tw_mess.user.picurl }}"/></a></div>
+	<div class="body">
+          <div class="tw_newsage">
+	    <a class="name" href="http://twitter.com/#!/{{ tw_mess.user.nick }}">{{ tw_mess.user.name|escape }}</a>
+        {% if tw_mess.text %}<br>{{ tw_mess.text|escape }}{% endif %}
+	  </div>
+	  {% if tw_mess.caption or tw_mess.picture %}
+	    <div class="attachment clearfix{% if not tw_mess.picture %} nopicture{% endif %}">
+	      {% if tw_mess.picture %}
+	        <div class="picture"><a href="{{ tw_mess.link|escape }}"><img src="{{ tw_mess.picture|escape }}"/></a></div>
+	      {% endif %}
+	      {% if tw_mess.name %}
+	        <div class="name"><a href="{{ tw_mess.link|escape }}">{{ tw_mess.name|escape }}</a></div>
+	      {% endif %}
+	      {% if tw_mess.caption %}
+	        <div class="caption">{{ tw_mess.caption|escape }}</div>
+	      {% endif %}
+	      {% if tw_mess.description %}
+	        <div class="description">{{ tw_mess.description|escape }}</div>
+	      {% endif %}
+	    </div>
+	  {% endif %}
+	  <div class="info{% if tw_mess.icon %} icon{% endif %}"{% if tw_mess.icon %} style="background:url('{{ tw_mess.icon|escape }}') no-repeat scroll 0 0 transparent"{% endif %}>
+	   <br> {{ tw_mess.created|timesince }} ago
+	  </div>
+	</div>
+    </div>
+      {% endfor %}
+</div>
+{% endif %}
+    

@@ -1,0 +1,74 @@
+body {
+	margin:0;
+	padding:0;
+	border:0;			/* This removes the border around the viewport in old versions of IE */
+	width:100%;
+}
+
+#header
+{
+	background: #5c4821;
+    height: 100px;
+    border-bottom: 10px solid #6a6151;
+    clear:both;
+	float:left;
+	width:100%;
+
+}
+
+#content-container
+{
+    position:relative;	/* This fixes the IE7 overflow hidden bug */
+	clear:both;
+	float:left;
+	width:100%;			/* width of whole page */
+	overflow:hidden;	
+}
+#column
+{
+    float: left;
+    position: relative;
+    right: 75%;
+    width: 100%;
+    background: #c4b9a3
+}
+
+#content
+{
+    /*clear: left;*/
+	left: 100%;
+	width: 75%;
+    float: left;
+    overflow: hidden;
+    /*padding: 0 0 1em;*/
+    position: relative;    
+	/*padding: 20px 0;
+	margin: 0 0 0 4%;
+	display: inline;*/
+    background: #c4b9a3
+}
+
+#aside
+{
+    width: 25%;    
+/*	padding: 20px 0;
+	margin: 0 3% 0 0;
+	display: inline;*/
+    background: #c4b9a3
+    float: left;
+    overflow: hidden;
+    /*padding: 0 0 1em;*/
+    position: relative;
+    
+}
+#footer
+{
+	clear: both;
+	background: #8c7d60;
+	/*text-align: right;
+	padding: 20px;*/
+	height: 100px;
+    float:left;
+	width:100%;
+
+}

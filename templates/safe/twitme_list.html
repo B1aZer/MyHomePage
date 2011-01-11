@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} Listing Invoices {% endblock %}
+
+{% block content %}
+    {% if mess %} 
+        {% for messg in mess %}
+        <p> {{ messg.text }} </p> 
+        {% endfor %}
+    {% else %}
+        {{ hello }}
+        <p>Welcome, no messages for you anonymous user!</p> 
+    {% endif %}
+{% endblock %}
