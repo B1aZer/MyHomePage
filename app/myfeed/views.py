@@ -389,12 +389,18 @@ def index(request):
     #p.add(url = 'http://')
     #logging.debug(p.url)
 
-    fb_news = fb_feed(request.user) #~0.05
-    fb_news = load_from_db('Facebook')
-    vk_news = vk_feed(request.user) #~1.0 with cooky 1.17 without
-    vk_news = load_from_db('Vkontakte')
-    tw_news = tw_feed(request.user) #~0.09 with db
+    #tw_news = tw_feed(request.user) #~0.09 with db
+    #fb_news = fb_feed(request.user) #~0.05
+    #vk_news = vk_feed(request.user) #~1.0 with cooky 1.17 without
+    #/ajax/
     tw_news = load_from_db('Twitter')
+    fb_news = load_from_db('Facebook')
+    vk_news = load_from_db('Vkontakte')
+    #±150ms
+    #+tw = 350/3000
+    #+fb = 250/1500
+    #+vk = 2000/2700
+    #all = 2200/6700
     #s = SocialAnalisator()
     #s.loadsystem(tw_news)
     elapsed = (clock() - start)

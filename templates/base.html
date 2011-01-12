@@ -11,17 +11,17 @@
   <link href="{{ MEDIA_URL }}css/layout-default-latest.css" type="text/css" rel="stylesheet">
   <link href="{{ MEDIA_URL }}css/base.css" type="text/css" rel="stylesheet">
   <!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>--!>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
+  <!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js"></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}js/hp.js"></script>
-    <script>
-    $(document).ready(function () {
-    //$("body").layout();
-    $("body").layout({});
-    //$("#content-container").layout({ applyDefaultStyles: true });
-            });
-    </script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/hp.js"></script>!-->
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/head.load.min.js"></script>
+  <script>
+  head.js("{{ MEDIA_URL }}js/jquery-1.4.4.min.js")
+  head.js("{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js")
+  head.js("{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js")
+  head.js("{{ MEDIA_URL }}js/hp.js")
+  </script>
   
   {% block external %}{% endblock %}
 </head>
