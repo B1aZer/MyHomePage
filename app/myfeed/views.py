@@ -408,6 +408,8 @@ def index(request):
         'hello' : 'hello',
         'news_feed' : fb_news,
         'vk_news' : vk_news,
+        'page_title' : 'My Home Page',
+        'head_title' : 'MyHomePage',
       })
     #context_instance=RequestContext(request)
     #print(variables)
