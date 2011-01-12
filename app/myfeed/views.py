@@ -55,15 +55,18 @@ def sql_debug():
 
 
 
-def load_from_db(systitle, FEED_C = 5):
-    try: 
+def load_from_db(systitle='all', FEED_C = 5):
+    try:  
         #data = {}
         #system = System.objects.get(title = systitle)
         #users = system.member_set.all()
         #for user in users:
             #user.message_set.all()
         #print("user",users[0])
-        messages = Message.objects.select_related().filter( system__title = systitle ).order_by('-created')[:FEED_C]
+        if systitle != 'all':
+            messages = Message.objects.select_related().filter( system__title = systitle ).order_by('-created')[:FEED_C]
+        else:
+            messages = Message.objects.select_related().all().order_by('-created')[:FEED_C]
     except:
         pass
     return messages
@@ -423,3 +426,17 @@ def index(request):
     #return render_to_response(template,
     #                          variables,
     #                          context_instance=RequestContext(request))
+
+def index_all(request):
+    template = 'base_all.html'
+    news = load_from_db()
+    variables = RequestContext(request, {
+    #variables = {
+        #'show_edit': username == request.user.username,
+        'news' : news,
+        'page_title' : 'My Home Page',
+        'head_title' : 'MyHomePage',
+      })
+    return render_to_response(template, variables)
+
+
