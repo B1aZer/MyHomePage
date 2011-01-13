@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext
+from django.http import HttpResponse
 from django.shortcuts import render_to_response,get_object_or_404
 import twitter
 import logging
@@ -17,6 +18,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from soupselect import select
 #test
 from django.db import connection
+from utils.json import json_encode
+from django.core import serializers
 
 
 COOKIEFILE = 'cookie'
@@ -429,14 +432,21 @@ def index(request):
 
 def index_all(request):
     template = 'base_all.html'
-    news = load_from_db()
+    #news = load_from_db()
     variables = RequestContext(request, {
     #variables = {
         #'show_edit': username == request.user.username,
-        'news' : news,
+        #'news' : news,
         'page_title' : 'My Home Page',
         'head_title' : 'MyHomePage',
       })
     return render_to_response(template, variables)
 
-
+def json_all(request):
+    news = load_from_db()
+    json_serializer = serializers.get_serializer("json")()
+    data = json_serializer.serialize(news, ensure_ascii=False)
+    #news = list(news)
+    #data = json_encode(news)
+    return HttpResponse(data, mimetype='application/json')
+    #return dict(news)

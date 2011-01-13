@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>{% block title %}{{head_title}}{% endblock %}</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <!--<link rel="shortcut icon" HREF="{{ MEDIA_URL }}img/favicon.png">--!>
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
+  <link href="{{ MEDIA_URL }}css/ui-theme/jquery-ui-1.8.7.custom.css" type="text/css" rel="stylesheet">
+  <link href="{{ MEDIA_URL }}css/layout-default-latest.css" type="text/css" rel="stylesheet">
+  <link href="{{ MEDIA_URL }}css/base.css" type="text/css" rel="stylesheet">
+  <!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>--!>
+  <!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/hp.js"></script>!-->
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/head.load.min.js"></script>
+  <script>
+  head.js("{{ MEDIA_URL }}js/jquery-1.4.4.min.js")
+  head.js("{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js")
+  head.js("{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js")
+  head.js("{{ MEDIA_URL }}js/main.js")
+  </script>
+  
+  {% block external %}{% endblock %}
+</head>
+<body> 
+        <div id="header" class ="ui-layout-north">
+            <h1>
+                {% block page %}{{page_title}}{% endblock %}
+            </h1>
+        </div>
+        <div id="content" class ="ui-layout-center">            
+          {% block content %}
+          {% endblock %}           
+        </div>
+        <div id="aside" class ="ui-layout-west">
+            {% block aside %}
+            <h3>
+                Aside heading
+            </h3>
+            <a href="#">Twitter</a><br>
+            <a href="#">Facebook</a><br>
+            <a href="#">Vkontakte</a><br>
+            {% endblock %}
+        </div>
+        <div id="footer" class ="ui-layout-south">
+        Copyright © Site name, 20XX
+        </div>
+</body> 
+</html>
+
+
