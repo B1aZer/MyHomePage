@@ -400,7 +400,7 @@ def index(request):
     #s.loadsystem(tw_news)
     elapsed = (clock() - start)
     logging.debug(elapsed)
-    sql_debug()
+    #sql_debug()
     #logging.debug(vk_news[0].message_set.)
     variables = RequestContext(request, {
     #variables = {
