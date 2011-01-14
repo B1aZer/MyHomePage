@@ -149,24 +149,25 @@ $(function() {
                 },
                 success: function(html){
                 $("#content").empty();
-                //$("#content").append(html);
+                $("#content").append(html);
                 //$(html).hide().appedTo("#content").show();
-                $(html)
-            // Sets the style of the elements to "display:none"
-              //  .hide()
-            // Appends the hidden elements to the "posts" element
-                .appendTo('#content')
-            // Fades the new content into view
-               // .fadeIn();
-                .parent()
-                .hide()
-                .show('slow')
+                /*$(html).appedTo("#content");*/
+                /*$(html)*/
+                /*// Sets the style of the elements to "display:none"*/
+                /*//  .hide()*/
+                /*// Appends the hidden elements to the "posts" element*/
+                /*.appendTo('#content')*/
+                /*// Fades the new content into view*/
+                /*// .fadeIn();*/
+                /*.parent()*/
+                /*.hide()*/
+                /*.show('slow')*/
 
                 //
-            /*$( ".accordeon" ).accordion({*/
-            /*collapsible: true,*/
-            /*active: false*/
-            /*});*/
+                $( ".accordeon" ).accordion({
+                    collapsible: true,
+                    active: false
+                });
                     $('.integer').hide();
 
                     
