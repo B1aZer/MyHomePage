@@ -1,0 +1,37 @@
+{% if news %}
+<h2>Timeline</h2>
+<p class="integer">{{INTEGER}}</p>
+<div class="accordeon">
+    {% for post in news %}
+    <h3><a href="#">{{ post.user.nick }}</a></h3>
+      <div class="entry clearfix">
+        <div class="profile"><a href="http://www.facebook.com/profile.php?id={{ post.user.sysid }}"><img src="http://graph.facebook.com/{{ post.user.sysid }}/picture"/></a></div>
+	<div class="body">
+          <div class="message">
+	    <a class="name" href="http://www.facebook.com/profile.php?id={{ post.user.sysid }}">{{ post.user.name|escape }}</a>
+            {% if post.text %}<br>{{ post.text|escape }}{% endif %}
+	  </div>
+	  {% if post.caption or post.picture %}
+	    <div class="attachment clearfix{% if not post.picture %} nopicture{% endif %}">
+	      {% if post.picture %}
+	        <div class="picture"><a href="{{ post.link|escape }}"><img src="{{ post.picture|escape }}"/></a></div>
+	      {% endif %}
+	      {% if post.name %}
+	        <div class="name"><a href="{{ post.link|escape }}">{{ post.name|escape }}</a></div>
+	      {% endif %}
+	      {% if post.caption %}
+	        <div class="caption">{{ post.caption|escape }}</div>
+	      {% endif %}
+	      {% if post.description %}
+	        <div class="description">{{ post.description|escape }}</div>
+	      {% endif %}
+	    </div>
+	  {% endif %}
+	  <div class="info{% if post.icon %} icon{% endif %}"{% if post.icon %} style="background:url('{{ post.icon|escape }}') no-repeat scroll 0 0 transparent"{% endif %}>
+	   <br> {{ post.created|timesince }} ago
+	  </div>
+	</div>
+      </div>
+    {% endfor %}
+</div>
+{% endif %}
