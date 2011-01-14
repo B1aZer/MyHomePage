@@ -31,6 +31,10 @@ h1,h2,h3,h4,h5
     font-family: 'Lobster',arial,serif;
 }
 
+.ui-button .ui-button-text {
+    width: 80px
+}
+
 .odd
 {
      background-color: #C4B597;

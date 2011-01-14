@@ -5,8 +5,16 @@
   <title>{% block title %}{{head_title}}{% endblock %}</title>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <!--<link rel="shortcut icon" HREF="{{ MEDIA_URL }}img/favicon.png">--!>
-  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    @font-face {
+      font-family: 'Lobster';
+      font-style: normal;
+      font-weight: normal;
+      src: local('Lobster1.4'), local('Lobster'), url('{{ MEDIA_URL }}fonts/lobster.ttf') format('truetype');
+    }
+  </style>
+  <!--<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>-->
+  <!--<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>-->
   <link href="{{ MEDIA_URL }}css/ui-theme/jquery-ui-1.8.7.custom.css" type="text/css" rel="stylesheet">
   <link href="{{ MEDIA_URL }}css/layout-default-latest.css" type="text/css" rel="stylesheet">
   <link href="{{ MEDIA_URL }}css/base.css" type="text/css" rel="stylesheet">

@@ -54,14 +54,20 @@
 	});
 })(jQuery);
 
-
-
 $(function() {
         $(document).ready(function () {
         //$("body").layout();
         $("body").layout({});
         //$("#content-container").layout({ applyDefaultStyles: true });
             });
+        callback = function(data) {
+            for (row in data) {
+                console.log(data);
+                var fields = data[row].fields;
+                //console.log(fields)
+            }
+            
+        }
         make_request = function(url, data, callback) {
         $.ajax({
             url: url,
@@ -103,10 +109,8 @@ $(function() {
                         ]),
                 ]);
 
-        $('<h1>').html('Timeline').appendTo('#content');
-        $('#content').append($feed);
-
-
+        //$('<h1>').html('Timeline').appendTo('#content');
+        //$('#content').append($feed);
 
 
         $( "a", "#aside" ).button();
@@ -114,11 +118,75 @@ $(function() {
             //$.getJSON('b.json');
             /*$.post("/json/", {type: "json"},*/
             /*function(data) {*/
-            /*alert(data);*/
+            /*callback(data);*/
             /*}, "json");*/
-            make_request('/json/',
-                {
-                }, {});
+            //var i = 0
+ //ver2 working           
+
+            /*$( '#content' ).load('/add/', {*/
+            /*limit: '5',*/
+            /*//begin: i+5*/
+            /*}, function() {*/
+            /*$( ".accordeon" ).accordion({*/
+            /*collapsible: true,*/
+            /*active: false*/
+            /*});*/
+            /*});*/
+            //hm = $('.integer').text();
+            if (!$('.integer').text()){
+                var hm = 0;
+                //alert('not')
+            }else{
+                hm = $('.integer').text()
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/add/",
+                data: {
+                    limit: '10',
+                    inter: hm
+                },
+                success: function(html){
+                $("#content").empty();
+                //$("#content").append(html);
+                //$(html).hide().appedTo("#content").show();
+                $(html)
+            // Sets the style of the elements to "display:none"
+              //  .hide()
+            // Appends the hidden elements to the "posts" element
+                .appendTo('#content')
+            // Fades the new content into view
+               // .fadeIn();
+                .parent()
+                .hide()
+                .show('slow')
+
+                //
+            /*$( ".accordeon" ).accordion({*/
+            /*collapsible: true,*/
+            /*active: false*/
+            /*});*/
+                    $('.integer').hide();
+
+                    
+                    //hm = $('.integer').text();
+                    //$('.integer').remove();
+
+                   // if (!$('.integer').text()){
+                    //    hm = 0            
+                    //}else{
+                        //$('.integer').remove();
+                    //}
+
+                }
+            });
+                        
+            /*make_request('/add/',*/
+            /*{*/
+            /*limit: 5*/
+            /*}, */
+            /*callback);*/
 
             /*$.post(url, $("#some_form").serialize(), function(data, text_status){*/
             /*alert(data);*/
@@ -126,19 +194,16 @@ $(function() {
             
         });
 
-
-                /*var request =  make_request('/test/mark_story_as_read');*/
+        /*var request =  make_request('/test/mark_story_as_read');*/
         /*{*/
         /*story_id: story_id*/
         /*}, callback*/
         /*);*/
-
-
         
-	//	$( "#toggle" ).button().toggle(function() {
-	//		$( "#accordion" ).accordion( "option", "icons", false );
-    //		}, function() {
-	//		$( "#accordion" ).accordion( "option", "icons", icons );
-	//	});
+        //	$( "#toggle" ).button().toggle(function() {
+        //		$( "#accordion" ).accordion( "option", "icons", false );
+        //		}, function() {
+        //		$( "#accordion" ).accordion( "option", "icons", icons );
+        //	});
 	});
 

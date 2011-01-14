@@ -20,10 +20,14 @@ from soupselect import select
 from django.db import connection
 from utils.json import json_encode
 from django.core import serializers
+from django.utils import simplejson as json
+from django.core.serializers.json import DateTimeAwareJSONEncoder
+
 
 
 COOKIEFILE = 'cookie'
 FEED_COUNT = 5
+INTEGER = 0
 
 class Person:
     def __init__(self):
@@ -58,8 +62,10 @@ def sql_debug():
 
 
 
-def load_from_db(systitle='all', FEED_C = 5):
-    try:  
+def load_from_db(systitle='all',FEED_B = 0, FEED_C = 5):
+    try :   
+        begin = FEED_B
+        count = begin+FEED_C
         #data = {}
         #system = System.objects.get(title = systitle)
         #users = system.member_set.all()
@@ -67,9 +73,13 @@ def load_from_db(systitle='all', FEED_C = 5):
             #user.message_set.all()
         #print("user",users[0])
         if systitle != 'all':
-            messages = Message.objects.select_related().filter( system__title = systitle ).order_by('-created')[:FEED_C]
+            messages = Message.objects.select_related().filter( system__title = systitle ).order_by('-created')[begin:count]
         else:
-            messages = Message.objects.select_related().all().order_by('-created')[:FEED_C]
+            messages = Message.objects.select_related(depth=1).all().order_by('-created')[begin :count]
+            #messages = messages.only('nick')
+            #messages = list(messages)
+            #messages.append(['userik','nice']
+            logging.debug(messages)
     except:
         pass
     return messages
@@ -323,7 +333,7 @@ def tw_feed(user):
                 consumer_secret='qf2Pi3qsHvA0RjomsnNRhY5iKDWHIVy9DQWGBzDQIkw', 
                 access_token_key='41890375-8WtfwO4GnEp0Gv2ewt9XfGVmaSoayNYpmn2JhtTb9', 
                 access_token_secret='fXeT4By3y15b8jZT1IkDPRQNnFEL507wxgsJGVSVrvo') 
-            statuses = api.GetFriendsTimeline('b1azer')[:FEED_COUNT]
+            statuses = api.GetFriendsTimeline('b1azer')[: FEED_COUNT]
             #system = System.objects.get(title = 'Twitter')
             if user.is_authenticated():
                 system, created = System.objects.get_or_create( title = 'Twitter', user = user)
@@ -433,6 +443,16 @@ def index(request):
 def index_all(request):
     template = 'base_all.html'
     #news = load_from_db()
+
+#test
+    news = load_from_db()
+    #news = unicode(list(news))
+    #logging.debug(news[1])
+    json_serializer = serializers.get_serializer("json")()
+    data = json_serializer.serialize(news, ensure_ascii=False)
+    #data = json.dumps(news, cls=DateTimeAwareJSONEncoder, ensure_ascii=False)
+    logging.debug(data)
+
     variables = RequestContext(request, {
     #variables = {
         #'show_edit': username == request.user.username,
@@ -450,3 +470,25 @@ def json_all(request):
     #data = json_encode(news)
     return HttpResponse(data, mimetype='application/json')
     #return dict(news)
+
+def json_add(request):
+    template = 'feed.html'
+    if request.is_ajax():
+        q = request.REQUEST["limit"]
+        b = request.REQUEST["inter"]
+        if q is not None:
+            news = load_from_db(FEED_B=int(b),FEED_C=int(q))
+            #news='all_good'
+    #news = list(news)
+    #data = json_encode(news)
+    if(news):
+        b=int(b)+5
+    else:
+        b=0
+        news = load_from_db(FEED_B=int(b),FEED_C=int(q))
+    variables = RequestContext(request, {
+        #'show_edit': username == request.user.username,
+        'news' : news,
+        'INTEGER' : b
+      })
+    return render_to_response(template, variables)

@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     (r'^$', include('app.myfeed.urls')),
     (r'^test/', index_all),
     (r'^json/', json_all),
+    (r'^add/', json_add),
 )
 
 if settings.DEBUG:
