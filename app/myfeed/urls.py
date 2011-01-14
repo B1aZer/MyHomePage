@@ -8,4 +8,5 @@ from app.myfeed.views import *
 urlpatterns = patterns('',
     #(r'^$', 'django.views.generic.list_detail.object_list', info_dict),
     (r'^$', index),
+    #(r'test', index_all),
 )

@@ -80,6 +80,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #'django.middleware.cache.CacheMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -125,3 +126,4 @@ if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
 
 LOGIN_URL = '/login/'
+#CACHE_BACKEND = 'file://django_cache'

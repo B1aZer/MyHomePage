@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext
+from django.http import HttpResponse
 from django.shortcuts import render_to_response,get_object_or_404
 import twitter
 import logging
@@ -17,11 +18,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from soupselect import select
 #test
 from django.db import connection
+from utils.json import json_encode
+from django.core import serializers
+from django.utils import simplejson as json
+from django.core.serializers.json import DateTimeAwareJSONEncoder
+
 
 
 COOKIEFILE = 'cookie'
 FEED_COUNT = 5
-#works for twitter only
+INTEGER = 0
 
 class Person:
     def __init__(self):
@@ -56,15 +62,24 @@ def sql_debug():
 
 
 
-def load_from_db(systitle, FEED_C = 5):
-    try: 
+def load_from_db(systitle='all',FEED_B = 0, FEED_C = 5):
+    try :   
+        begin = FEED_B
+        count = begin+FEED_C
         #data = {}
         #system = System.objects.get(title = systitle)
         #users = system.member_set.all()
         #for user in users:
             #user.message_set.all()
         #print("user",users[0])
-        messages = Message.objects.select_related().filter( system__title = systitle ).order_by('-created')[:FEED_C]
+        if systitle != 'all':
+            messages = Message.objects.select_related().filter( system__title = systitle ).order_by('-created')[begin:count]
+        else:
+            messages = Message.objects.select_related(depth=1).all().order_by('-created')[begin :count]
+            #messages = messages.only('nick')
+            #messages = list(messages)
+            #messages.append(['userik','nice']
+            logging.debug(messages)
     except:
         pass
     return messages
@@ -318,7 +333,7 @@ def tw_feed(user):
                 consumer_secret='qf2Pi3qsHvA0RjomsnNRhY5iKDWHIVy9DQWGBzDQIkw', 
                 access_token_key='41890375-8WtfwO4GnEp0Gv2ewt9XfGVmaSoayNYpmn2JhtTb9', 
                 access_token_secret='fXeT4By3y15b8jZT1IkDPRQNnFEL507wxgsJGVSVrvo') 
-            statuses = api.GetFriendsTimeline('b1azer')[:FEED_COUNT]
+            statuses = api.GetFriendsTimeline('b1azer')[: FEED_COUNT]
             #system = System.objects.get(title = 'Twitter')
             if user.is_authenticated():
                 system, created = System.objects.get_or_create( title = 'Twitter', user = user)
@@ -390,12 +405,18 @@ def index(request):
     #p.add(url = 'http://')
     #logging.debug(p.url)
 
-    fb_news = fb_feed(request.user) #~0.05
-    fb_news = load_from_db('Facebook')
-    vk_news = vk_feed(request.user) #~1.0 with cooky 1.17 without
-    vk_news = load_from_db('Vkontakte')
-    tw_news = tw_feed(request.user) #~0.09 with db
+    #tw_news = tw_feed(request.user) #~0.09 with db
+    #fb_news = fb_feed(request.user) #~0.05
+    #vk_news = vk_feed(request.user) #~1.0 with cooky 1.17 without
+    #/ajax/
     tw_news = load_from_db('Twitter')
+    fb_news = load_from_db('Facebook')
+    vk_news = load_from_db('Vkontakte')
+    #±150ms
+    #+tw = 350/3000
+    #+fb = 250/1500
+    #+vk = 2000/2700
+    #all = 2200/6700
     #s = SocialAnalisator()
     #s.loadsystem(tw_news)
     elapsed = (clock() - start)
@@ -409,6 +430,8 @@ def index(request):
         'hello' : 'hello',
         'news_feed' : fb_news,
         'vk_news' : vk_news,
+        'page_title' : 'My Home Page',
+        'head_title' : 'MyHomePage',
       })
     #context_instance=RequestContext(request)
     #print(variables)
@@ -416,3 +439,56 @@ def index(request):
     #return render_to_response(template,
     #                          variables,
     #                          context_instance=RequestContext(request))
+
+def index_all(request):
+    template = 'base_all.html'
+    #news = load_from_db()
+
+#test
+    news = load_from_db()
+    #news = unicode(list(news))
+    #logging.debug(news[1])
+    json_serializer = serializers.get_serializer("json")()
+    data = json_serializer.serialize(news, ensure_ascii=False)
+    #data = json.dumps(news, cls=DateTimeAwareJSONEncoder, ensure_ascii=False)
+    logging.debug(data)
+
+    variables = RequestContext(request, {
+    #variables = {
+        #'show_edit': username == request.user.username,
+        #'news' : news,
+        'page_title' : 'My Home Page',
+        'head_title' : 'MyHomePage',
+      })
+    return render_to_response(template, variables)
+
+def json_all(request):
+    news = load_from_db()
+    json_serializer = serializers.get_serializer("json")()
+    data = json_serializer.serialize(news, ensure_ascii=False)
+    #news = list(news)
+    #data = json_encode(news)
+    return HttpResponse(data, mimetype='application/json')
+    #return dict(news)
+
+def json_add(request):
+    template = 'feed.html'
+    if request.is_ajax():
+        q = request.REQUEST["limit"]
+        b = request.REQUEST["inter"]
+        if q is not None:
+            news = load_from_db(FEED_B=int(b),FEED_C=int(q))
+            #news='all_good'
+    #news = list(news)
+    #data = json_encode(news)
+    if(news):
+        b=int(b)+5
+    else:
+        b=0
+        news = load_from_db(FEED_B=int(b),FEED_C=int(q))
+    variables = RequestContext(request, {
+        #'show_edit': username == request.user.username,
+        'news' : news,
+        'INTEGER' : b
+      })
+    return render_to_response(template, variables)
