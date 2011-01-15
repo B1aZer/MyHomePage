@@ -1,5 +1,4 @@
-Django==1.2.4
-facebook-python-sdk==0.1
 httplib2==0.6.0
 oauth2==1.2.0
 python-twitter==0.8.1
+-e git://github.com/facebook/python-sdk.git#egg=facebook-python-sdk==0.1
