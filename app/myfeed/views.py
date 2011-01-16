@@ -22,10 +22,12 @@ from utils.json import json_encode
 from django.core import serializers
 from django.utils import simplejson as json
 from django.core.serializers.json import DateTimeAwareJSONEncoder
+from settings import APPLICATION_DIR
 
 
 
-COOKIEFILE = 'cookie'
+COOKIEFILE = APPLICATION_DIR+'/cookie'
+#print COOKIEFILE
 FEED_COUNT = 5
 INTEGER = 0
 
