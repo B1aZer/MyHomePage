@@ -127,4 +127,19 @@ if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
 
 LOGIN_URL = '/login/'
-#CACHE_BACKEND = 'file://django_cache'
+COMPRESS_CSS_FILTERS = None
+COMPRESS_CSS = {
+    'all': {
+        'source_filenames': ('css/ui-theme/jquery-ui-1.8.7.custom.css', 'css/layout-default-latest.css', 'css/base.css'),
+        'output_filename': 'css/one_compressed.css',
+    }
+}
+
+COMPRESS_JS = {
+    'all': {
+        'source_filenames': ('js/head.load.min.js', 'js/jquery-1.4.4.min.js', 'js/jquery-ui-1.8.7.custom.min.js',
+        'js/jquery.layout.min-1.2.0.js', 'js/main.js'),
+        'output_filename': 'js/all_compressed.js',
+    }
+}
+

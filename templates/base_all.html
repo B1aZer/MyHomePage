@@ -15,20 +15,24 @@
   </style>
   <!--<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>-->
   <!--<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>-->
-  <link href="{{ MEDIA_URL }}css/ui-theme/jquery-ui-1.8.7.custom.css" type="text/css" rel="stylesheet">
-  <link href="{{ MEDIA_URL }}css/layout-default-latest.css" type="text/css" rel="stylesheet">
-  <link href="{{ MEDIA_URL }}css/base.css" type="text/css" rel="stylesheet">
+
+  <!--<link href="{{ MEDIA_URL }}css/ui-theme/jquery-ui-1.8.7.custom.css" type="text/css" rel="stylesheet">-->
+  <!--<link href="{{ MEDIA_URL }}css/layout-default-latest.css" type="text/css" rel="stylesheet">-->
+  <!--<link href="{{ MEDIA_URL }}css/base.css" type="text/css" rel="stylesheet">-->
+  {% load compressed %}
+  {% compressed_css 'all' %}
   <!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>--!>
   <!--<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}js/hp.js"></script>!-->
+
   <script type="text/javascript" src="{{ MEDIA_URL }}js/head.load.min.js"></script>
   <script>
-  head.js("{{ MEDIA_URL }}js/jquery-1.4.4.min.js")
-  head.js("{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js")
-  head.js("{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js")
-  head.js("{{ MEDIA_URL }}js/main.js")
+      head.js("{{ MEDIA_URL }}js/jquery-1.4.4.min.js")
+      head.js("{{ MEDIA_URL }}js/jquery-ui-1.8.7.custom.min.js")
+      head.js("{{ MEDIA_URL }}js/jquery.layout.min-1.2.0.js")
+      head.js("{{ MEDIA_URL }}js/main.js")
   </script>
   
   {% block external %}{% endblock %}
