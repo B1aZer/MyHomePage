@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     #'devserver',
     'app.myfeed',
+    'compress',
 )
 if DEBUG:
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
