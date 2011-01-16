@@ -130,7 +130,7 @@ LOGIN_URL = '/login/'
 COMPRESS_CSS_FILTERS = None
 COMPRESS_CSS = {
     'all': {
-        'source_filenames': ('css/ui-theme/jquery-ui-1.8.7.custom.css', 'css/layout-default-latest.css', 'css/base.css'),
+        'source_filenames': ('css/jquery-ui-1.8.7.custom.css', 'css/layout-default-latest.css', 'css/base.css'),
         'output_filename': 'css/one_compressed.css',
     }
 }
