@@ -41,7 +41,7 @@ class Message(models.Model):
     def __unicode__(self):
         return self.text
     
-    class Meta:
-        unique_together = ("system", "text")
+#    class Meta:
+#        unique_together = ("system", "text")
 
 
