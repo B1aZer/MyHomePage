@@ -133,6 +133,7 @@ $(function() {
             /*});*/
             /*});*/
             //hm = $('.integer').text();
+            var system = $(this).text();
             if (!$('.integer').text()){
                 var hm = 0;
                 //alert('not')
@@ -145,7 +146,8 @@ $(function() {
                 url: "/add/",
                 data: {
                     limit: '10',
-                    inter: hm
+                    inter: hm,
+                    system:system
                 },
                 success: function(html){
                 $("#content").empty();

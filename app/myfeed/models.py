@@ -7,7 +7,7 @@ import datetime
 
 
 class System(models.Model):
-    user =  models.ForeignKey(User)
+    #user =  models.ForeignKey(User)
     title = models.CharField( max_length = 255)
     active = models.BooleanField(default = True)
     

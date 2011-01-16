@@ -85,13 +85,13 @@ def load_from_db(systitle='all',FEED_B = 0, FEED_C = 5):
     return messages
 
 
-def save_to_db(data, user, systitle='Vkontakte'):
+def save_to_db(data, systitle='Vkontakte'):
     #logging.debug(type(da ta))
     if isinstance(data, list):
-        if user.is_authenticated():
-            system, created = System.objects.get_or_create( title = systitle, user = user)
-        else:
-            system = System.objects.get( title = systitle)
+        #if user.is_authenticated():
+        system, created = System.objects.get_or_create( title = systitle)
+        #else:
+        #    system = System.objects.get( title = systitle)
         try:
             mes1 = data[0]['message']
             exist = system.message_set.filter(text__contains = mes1)
@@ -238,7 +238,7 @@ def browser(url, post = None):
     return data
 
 
-def vk_feed(user):
+def vk_feed():
     post  =  {
     'email' : '2bbf@mail.ru',
     'from_host' : 'vkontakte.ru',
@@ -266,12 +266,12 @@ def vk_feed(user):
         browser(url,post)
         data = browser(url2)
         content, lister = parser(data)
-        save_to_db(lister,user)
+        save_to_db(lister)
     else:
-        save_to_db(lister,user)
+        save_to_db(lister)
     return content
 
-def fb_feed(user):
+def fb_feed():
     FACEBOOK_APP_ID = "184062098289427"
     FACEBOOK_APP_SECRET = "75fb6b2dadcfb90c3b4da7f7593d439b"
     FACEBOOK_OATH_TOKEN = "184062098289427|581fb9c8dabc8880f5114c1a-586527073|qZ5xs_S2_rwvaYsLXdXKZVwcST8"
@@ -281,10 +281,10 @@ def fb_feed(user):
     except:
         logging.debug("error auth from fb")
         news_feed = {}
-    if user.is_authenticated():
-        system, created = System.objects.get_or_create( title = 'Facebook', user = user)
-    else:
-        system = System.objects.get( title = 'Facebook')
+    #if user.is_authenticated():
+    system, created = System.objects.get_or_create( title = 'Facebook' )
+    #else:
+    #    system = System.objects.get( title = 'Facebook')
 
     #print(news_feed["data"])
     #system = get_object_or_404(System.objects,title__contains = 'Twitter')
@@ -320,7 +320,7 @@ def fb_feed(user):
     #            datetime.timedelta(hours=3)
     return news_feed
 
-def tw_feed(user):
+def tw_feed():
  
     userName = 'b1azer'
     password = 'armanda'
@@ -335,10 +335,11 @@ def tw_feed(user):
                 access_token_secret='fXeT4By3y15b8jZT1IkDPRQNnFEL507wxgsJGVSVrvo') 
             statuses = api.GetFriendsTimeline('b1azer')[: FEED_COUNT]
             #system = System.objects.get(title = 'Twitter')
-            if user.is_authenticated():
-                system, created = System.objects.get_or_create( title = 'Twitter', user = user)
-            else:
-                system = System.objects.get( title = 'Twitter')
+            #if user.is_authenticated():
+            #    system, created = System.objects.get_or_create( title = 'Twitter', user = user)
+            #else:
+            system, created = System.objects.get_or_create( title = 'Twitter')
+                #system = System.objects.get( title = 'Twitter')
             #system = get_object_or_404(System.objects,title__contains = 'Twitter')
             try:
                 exist = system.message_set.filter(text__contains = statuses[0].text)
@@ -408,6 +409,7 @@ def index(request):
     #tw_news = tw_feed(request.user) #~0.09 with db
     #fb_news = fb_feed(request.user) #~0.05
     #vk_news = vk_feed(request.user) #~1.0 with cooky 1.17 without
+     #~1.0 with cooky 1.17 without
     #/ajax/
     tw_news = load_from_db('Twitter')
     fb_news = load_from_db('Facebook')
@@ -443,7 +445,7 @@ def index(request):
 def index_all(request):
     template = 'base_all.html'
     #news = load_from_db()
-
+    #tw_feed()
 #test
     news = load_from_db()
     #news = unicode(list(news))
@@ -472,12 +474,17 @@ def json_all(request):
     #return dict(news)
 
 def json_add(request):
+    sysarr = { 'Twitter' : tw_feed,
+            'Facebook' : fb_feed,
+             'Vkontakte' : vk_feed}
     template = 'feed.html'
     if request.is_ajax():
         q = request.REQUEST["limit"]
         b = request.REQUEST["inter"]
+        s = request.REQUEST["system"]
+        sysarr[s]()
         if q is not None:
-            news = load_from_db(FEED_B=int(b),FEED_C=int(q))
+            news = load_from_db(systitle=s,FEED_B=int(b),FEED_C=int(q))
             #news='all_good'
     #news = list(news)
     #data = json_encode(news)
@@ -485,7 +492,7 @@ def json_add(request):
         b=int(b)+5
     else:
         b=0
-        news = load_from_db(FEED_B=int(b),FEED_C=int(q))
+        news = load_from_db(systitle=s, FEED_B=int(b),FEED_C=int(q))
     variables = RequestContext(request, {
         #'show_edit': username == request.user.username,
         'news' : news,
